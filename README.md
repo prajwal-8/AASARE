@@ -80,7 +80,7 @@ The project now includes a **continuous integration and continuous deployment (C
 
 **AASARE** is deployed using **Azure Container Apps (ACA)** for scalable, serverless container hosting.
 
-#### 🔹 Deployment Architecture
+####  Deployment Architecture
 
 | Component    | Platform                       | Purpose                                           |
 | ------------ | ------------------------------ | ------------------------------------------------- |
@@ -218,7 +218,9 @@ REACT_APP_API_URL=http://localhost:5000
 ## Author
 
 **Prajwal S**
-AI Developer | Full Stack Engineer | Passionate about Mental Health Tech
+- Devops Engineer
+- Full Stack Engineer 
+- AI Developer
 **[prajwal8321@gmail.com](mailto:prajwal8321@gmail.com)**
 
 > _“Technology can’t replace therapy — but it can offer a safe first step toward help.”_
