@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9eec88c9.css",
-    "main.js": "/static/js/main.a0f30c08.js",
+    "main.js": "/static/js/main.924b386f.js",
     "static/media/WE WILL (15).png": "/static/media/WE WILL (15).7c4b0f0b7c562eb27afc.png",
     "static/media/WE WILL.png": "/static/media/WE WILL.3a0358ff6b5e45095fee.png",
     "static/media/WE WILL (7).png": "/static/media/WE WILL (7).ef5ddd6ffd1dcf6b77e1.png",
@@ -14,10 +14,10 @@
     "static/media/Aasarelogo.jpg": "/static/media/Aasarelogo.f65d5f0493f87e8f9c2d.jpg",
     "index.html": "/index.html",
     "main.9eec88c9.css.map": "/static/css/main.9eec88c9.css.map",
-    "main.a0f30c08.js.map": "/static/js/main.a0f30c08.js.map"
+    "main.924b386f.js.map": "/static/js/main.924b386f.js.map"
   },
   "entrypoints": [
     "static/css/main.9eec88c9.css",
-    "static/js/main.a0f30c08.js"
+    "static/js/main.924b386f.js"
   ]
 }
