@@ -158,7 +158,7 @@ async def chatbot_response(question: str) -> dict:
 
     except Exception as e:
         print("Chatbot error:", e)
-        # Never crash the API; return a safe message
+        # Never crash the API; return a safe messagee
         return {
             "response": "The chatbot service is unavailable right now. Please try again later.",
             "error": str(e)

@@ -5,7 +5,7 @@ It combines **Flask**, **React**, and **MongoDB** to create a seamless experienc
 
 ---
 
-## 🌿 Overview
+## Overview
 
 In today’s fast-paced world, mental health issues like stress, anxiety, and depression are common, yet access to help is limited.  
 **AASARE bridges this gap** by offering a digital companion that listens, guides, and recommends helpful content — all in one place.

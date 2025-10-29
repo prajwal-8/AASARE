@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import '../css/Blogs.css'; // Make sure to import the CSS file
-import memoji from '../assets/images/memoji.jpeg'; // Import the image
+import memoji from '../assets/images/memoji.jpeg'; // Import the imagee
 
 const Blogs = () => {
     const { auth } = useAuth();
