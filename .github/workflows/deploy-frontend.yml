@@ -1,4 +1,4 @@
-name: Deploy Frontend to Azure Container Apps
+name:  Deploy Frontend to Azure Container Apps
 
 on:
   push:
