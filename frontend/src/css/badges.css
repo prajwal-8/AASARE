@@ -1,0 +1,41 @@
+/* badge.css */
+
+/* Styles for the overall page background */
+.badgebody {
+    background-image: url(../assets/images/WE\ WILL\ \(15\).png);
+    background-size: contain; /* Ensures the entire image is visible */
+    background-position: center center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    min-height: 100vh; /* Ensures the background covers the full viewport height */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+    display: flex; /* Uses flexbox to center the content */
+    flex-direction: column; /* Align items vertically */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    background-color: #AAE1DF; /* Fallback background color */
+    text-align: center; /* Centers text */
+}
+
+/* Styles for the badge title */
+.badge-title {
+    font-size: 54px;
+    color: #590ebc;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Styles for the badge list */
+.badge-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Styles for individual badge items */
+.badge-item {
+    color: #114bb5;
+    font-size: 18px;
+    margin: 10px 0;
+    font-size: 24px;
+}

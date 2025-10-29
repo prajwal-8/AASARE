@@ -1,0 +1,160 @@
+id: /subscriptions/e0d1262e-a40b-4589-b340-7a54736f4d79/resourceGroups/aasare-group/providers/Microsoft.App/containerapps/aasare-backend
+identity:
+  type: None
+location: Central US
+name: aasare-backend
+properties:
+  configuration:
+    activeRevisionsMode: Single
+    dapr: null
+    ingress:
+      allowInsecure: false
+      clientCertificateMode: null
+      corsPolicy: null
+      customDomains: null
+      exposedPort: 0
+      external: true
+      fqdn: aasare-backend.purplecoast-a2cd8a9e.centralus.azurecontainerapps.io
+      ipSecurityRestrictions: null
+      stickySessions: null
+      targetPort: 5000
+      traffic:
+        - latestRevision: true
+          weight: 100
+      transport: Auto
+    maxInactiveRevisions: 100
+    registries:
+      - identity: ""
+        passwordSecretRef: aasareregistryazurecrio-aasareregistry
+        server: aasareregistry.azurecr.io
+        username: aasareregistry
+    secrets:
+      - name: aasareregistryazurecrio-aasareregistry
+    service: null
+  customDomainVerificationId: 2C1B8C89317F16290B9CEAB507FA5B721380C6A158B403DF382312AE8D501C44
+  delegatedIdentities: []
+  environmentId: /subscriptions/e0d1262e-a40b-4589-b340-7a54736f4d79/resourceGroups/aasare-group/providers/Microsoft.App/managedEnvironments/aasare-env
+  eventStreamEndpoint: https://centralus.azurecontainerapps.dev/subscriptions/e0d1262e-a40b-4589-b340-7a54736f4d79/resourceGroups/aasare-group/containerApps/aasare-backend/eventstream
+  latestReadyRevisionName: aasare-backend--d514qxq
+  latestRevisionFqdn: aasare-backend--d514qxq.purplecoast-a2cd8a9e.centralus.azurecontainerapps.io
+  latestRevisionName: aasare-backend--d514qxq
+  managedEnvironmentId: /subscriptions/e0d1262e-a40b-4589-b340-7a54736f4d79/resourceGroups/aasare-group/providers/Microsoft.App/managedEnvironments/aasare-env
+  outboundIpAddresses:
+    - 20.84.194.4
+    - 20.84.193.62
+    - 104.43.206.195
+    - 104.43.193.31
+    - 104.43.193.12
+    - 104.43.206.255
+    - 104.208.32.103
+    - 104.43.202.40
+    - 104.43.193.29
+    - 104.43.204.253
+    - 104.43.193.0
+    - 104.43.193.5
+    - 20.84.193.84
+    - 40.77.66.51
+    - 40.83.16.22
+    - 40.83.21.214
+    - 40.77.64.230
+    - 40.77.68.211
+    - 40.77.66.213
+    - 40.77.80.56
+    - 40.77.71.108
+    - 40.77.71.6
+    - 40.77.68.109
+    - 20.84.193.40
+    - 135.233.67.211
+    - 135.233.67.95
+    - 135.233.67.231
+    - 135.233.67.96
+    - 135.233.67.204
+    - 135.233.67.160
+    - 64.236.75.41
+    - 128.203.166.10
+    - 64.236.74.84
+    - 128.203.236.234
+    - 172.169.204.243
+    - 172.169.205.18
+    - 172.169.204.172
+    - 172.169.204.186
+    - 172.169.204.232
+    - 172.169.204.225
+    - 40.89.240.243
+    - 13.89.111.127
+    - 64.236.113.15
+    - 64.236.112.134
+    - 64.236.112.251
+    - 64.236.113.32
+    - 64.236.112.119
+    - 64.236.113.23
+    - 64.236.112.111
+    - 64.236.112.120
+    - 64.236.112.221
+    - 64.236.112.237
+    - 13.89.111.197
+    - 172.169.207.227
+    - 172.169.205.144
+    - 172.168.41.166
+    - 135.233.107.143
+    - 172.169.206.100
+    - 172.169.187.35
+    - 172.169.206.55
+    - 172.169.58.181
+    - 172.169.63.30
+    - 172.169.63.29
+    - 40.89.240.113
+    - 172.169.58.116
+    - 172.169.63.35
+    - 135.233.59.18
+    - 52.228.167.121
+    - 72.152.60.23
+    - 130.131.144.244
+    - 52.228.167.149
+    - 52.230.237.13
+    - 52.230.237.16
+    - 52.230.237.27
+    - 52.230.237.18
+    - 52.230.237.21
+    - 52.230.237.9
+    - 172.168.125.63
+  provisioningState: Succeeded
+  runningStatus: Running
+  template:
+    containers:
+      - env:
+          - name: MONGO_URI
+            value: mongodb+srv://Prajwal_S:Prajwal123@aasare.4qqu82a.mongodb.net/aasare?authSource=admin&retryWrites=true&w=majority&appName=AASARE
+          - name: TADDY_USER_ID
+            value: "1549"
+          - name: TADDY_API_KEY
+            value: 99e00e715663ca5340d4f4cb9c68dee01dcd9e3810b4c2afaed897d0e0d121501c6d090b69f14ab9eb25a15e08da5d9640
+          - name: GOOGLE_API_KEY
+            value: AIzaSyAauXhgfqmZ5OxDejdqZqOjB9G0Pxo6rxs
+          - name: SECRET_KEY
+            value: 22a17dd3990b0d0d9ddf80f597788fa7bb7a579730fc133ba90583fc1d3cc9cc
+        targetPort: 5000
+        image: aasareregistry.azurecr.io/aasare-backend:latest
+        name: aasare-backend
+        resources:
+          cpu: 0.5
+          ephemeralStorage: 2Gi
+          memory: 1Gi
+    initContainers: null
+    revisionSuffix: ""
+    scale:
+      maxReplicas: 10
+      minReplicas: null
+      rules: null
+    serviceBinds: null
+    terminationGracePeriodSeconds: null
+    volumes: null
+  workloadProfileName: Consumption
+systemData:
+  createdAt: "2025-10-28T08:27:01.3843742"
+  createdBy: bsprajwal.2020@gmail.com
+  createdByType: User
+  lastModifiedAt: "2025-10-28T08:27:01.3843742"
+  lastModifiedBy: bsprajwal.2020@gmail.com
+  lastModifiedByType: User
+type: Microsoft.App/containerApps

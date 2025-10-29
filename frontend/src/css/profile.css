@@ -1,0 +1,254 @@
+/* profile.css */
+
+.profilebody {
+    background-image: url(../assets/images/WE\ WILL\ \(10\).png);
+    background-size: cover; /* Ensures the entire image covers the background */
+    background-position: center; /* Centers the background image */
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #AAE1DF; /* Fallback background color */
+}
+
+.profile-container {
+    max-width: 800px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h2 {
+    font-size: 2em;
+    color: #333;
+}
+
+.profile-details {
+    margin-bottom: 20px;
+}
+
+.profile-details p {
+    font-size: 1.2em;
+    color: #555;
+    margin: 5px 0;
+}
+
+.profile-edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-edit-form label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-edit-form input,
+.profile-edit-form textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.profile-edit-form .form-buttons {
+    display: flex;
+    justify-content: space-between; /* Align buttons in the same row with space between */
+    margin-top: 10px; /* Add margin top for spacing */
+}
+
+.profile-edit-form button {
+    padding: 8px 16px;
+    width: 100px; /* Adjust button width as needed */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.profile-edit-form button:hover {
+    background-color: #0056b3;
+}
+
+.blogs-section,
+.exercises-section {
+    margin-top: 20px;
+}
+
+.blogs-section h3,
+.exercises-section h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.blogs-list,
+.exercises-list {
+    list-style: none;
+    padding: 0;
+}
+
+.blog-item,
+.exercise-item {
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.blog-item h4,
+.exercise-item h4 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #007bff;
+}
+
+.blog-item p,
+.exercise-item p {
+    font-size: 1em;
+    color: #555;
+}
+
+.blog-item button,
+.exercise-item button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.blog-item button:hover,
+.exercise-item button:hover {
+    background-color: #218838;
+}
+
+.edit-form {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.edit-form label {
+    display: block;
+    margin: 5px 0;
+}
+
+.edit-form input,
+.edit-form textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.edit-form .form-buttons {
+    display: flex;
+    justify-content: space-between; /* Align buttons in the same row with space between */
+    margin-top: 10px; /* Add margin top for spacing */
+}
+
+.edit-form button {
+    padding: 5px 10px;
+    width: 80px; /* Adjust button width as needed */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-form button:hover {
+    background-color: #0056b3;
+}
+
+.logout-button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.logout-button:hover {
+    background-color: #c82333;
+}
+
+.button-56 {
+    align-items: center;
+    background-color: #fee6e3;
+    border: 2px solid #111;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #111;
+    cursor: pointer;
+    display: flex;
+    font-family: Inter, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    height: 48px;
+    justify-content: center;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .button-56:after {
+    background-color: #111;
+    border-radius: 8px;
+    content: "";
+    display: block;
+    height: 48px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    top: -2px;
+    transform: translate(8px, 8px);
+    transition: transform .2s ease-out;
+    z-index: -1;
+  }
+  
+  .button-56:hover:after {
+    transform: translate(0, 0);
+  }
+  
+  .button-56:active {
+    background-color: #ffdeda;
+    outline: 0;
+  }
+  
+  .button-56:hover {
+    outline: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .button-56 {
+      padding: 0 40px;
+    }
+  }
