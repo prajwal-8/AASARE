@@ -1,4 +1,4 @@
-name:  Deploy Frontend to Azure Container Apps
+name: Deploy Frontend to Azure Container Apps
 
 on:
   push:
@@ -24,8 +24,11 @@ jobs:
         run: az acr login --name aasareregistry
 
       - name: Build and Push Docker image
+        env:
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }} # inject backend URL
         run: |
           cd frontend
+          echo "REACT_APP_API_URL=$REACT_APP_API_URL" > .env    #  create .env dynamically
           docker buildx build --platform linux/amd64 \
             -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-frontend:latest . --push
 
