@@ -39,4 +39,4 @@ jobs:
             --set-env-vars \
               MONGO_URI="${{ secrets.MONGO_URI }}" \
               GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
-              SECRET_KEY="${{ secrets.SECRET_KEY }}" similarly for backend
+              SECRET_KEY="${{ secrets.SECRET_KEY }}" 
