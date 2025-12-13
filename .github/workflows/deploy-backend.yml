@@ -4,33 +4,64 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'backend/**'
-      - '.github/workflows/deploy-backend.yml'
+      - "backend/**"
+      - ".github/workflows/deploy-backend.yml"
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: login to Azure
+      # 2️⃣ Login to Azure
+      - name: Login to Azure
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name:  Login to Azure Container Registry
-        run: |
-          az acr login --name aasareregistry
+      # 3️⃣ Login to Azure Container Registry
+      - name: Login to Azure Container Registry
+        run: az acr login --name aasareregistry
 
+      # 4️⃣ Build & Push Backend Image
       - name: Build and Push Docker image
         run: |
           cd backend
           docker buildx build --platform linux/amd64 \
-            -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest . --push
+            -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest \
+            . --push
 
-      - name:  Deploy to Azure Container App
+      # 5️⃣ Create Backend Container App IF NOT EXISTS
+      - name: Create Backend Container App if not exists
+        run: |
+          if ! az containerapp show \
+            --name ${{ secrets.AZURE_CONTAINER_APP }} \
+            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} > /dev/null 2>&1; then
+
+            echo "Backend Container App not found. Creating..."
+
+            az containerapp create \
+              --name ${{ secrets.AZURE_CONTAINER_APP }} \
+              --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+              --environment aasare-env \
+              --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest \
+              --target-port 8080 \
+              --ingress external \
+              --min-replicas 0 \
+              --max-replicas 1 \
+              --env-vars \
+                MONGO_URI="${{ secrets.MONGO_URI }}" \
+                GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
+                SECRET_KEY="${{ secrets.SECRET_KEY }}"
+          else
+            echo "Backend Container App already exists."
+          fi
+
+      # 6️⃣ Update Backend Container App (Deploy)
+      - name: Deploy Backend to Azure Container App
         run: |
           az containerapp update \
             --name ${{ secrets.AZURE_CONTAINER_APP }} \
