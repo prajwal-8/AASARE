@@ -12,21 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout code
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # 1️⃣ Checkout
+      - uses: actions/checkout@v4
 
-      # 2️⃣ Login to Azure
-      - name: Login to Azure
-        uses: azure/login@v2
+      # 2️⃣ Azure login
+      - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # 3️⃣ Login to Azure Container Registry
+      # 3️⃣ Login to ACR (for docker push)
       - name: Login to Azure Container Registry
         run: az acr login --name aasareregistry
 
-      # 4️⃣ Build & Push Backend Image
+      # 4️⃣ Build & Push image
       - name: Build and Push Docker image
         run: |
           cd backend
@@ -34,14 +32,12 @@ jobs:
             -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest \
             . --push
 
-      # 5️⃣ Create Backend Container App IF NOT EXISTS
+      # 5️⃣ Create Backend App if missing (WITH registry auth)
       - name: Create Backend Container App if not exists
         run: |
           if ! az containerapp show \
             --name ${{ secrets.AZURE_CONTAINER_APP }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} > /dev/null 2>&1; then
-
-            echo "Backend Container App not found. Creating..."
 
             az containerapp create \
               --name ${{ secrets.AZURE_CONTAINER_APP }} \
@@ -59,20 +55,15 @@ jobs:
                 MONGO_URI="${{ secrets.MONGO_URI }}" \
                 GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
                 SECRET_KEY="${{ secrets.SECRET_KEY }}"
-          else
-            echo "Backend Container App already exists."
           fi
 
-      # 6️⃣ Update Backend Container App (Deploy)
-      - name: Deploy Backend to Azure Container App
+      # 6️⃣ Update image ONLY (NO registry flags)
+      - name: Deploy Backend
         run: |
           az containerapp update \
             --name ${{ secrets.AZURE_CONTAINER_APP }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest \
-            --registry-server ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }} \
             --set-env-vars \
               MONGO_URI="${{ secrets.MONGO_URI }}" \
               GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
