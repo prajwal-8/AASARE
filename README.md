@@ -225,7 +225,7 @@ REACT_APP_API_URL=http://localhost:5000
 - AI Developer
 - Full Stack Engineer
 - Devops Engineer
-- Full Stack Engineer 
+- Full Stack Engineer  
 
 
 - **[prajwal8321@gmail.com](mailto:prajwal8321@gmail.com)**
