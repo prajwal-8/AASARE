@@ -52,6 +52,9 @@ jobs:
               --ingress external \
               --min-replicas 0 \
               --max-replicas 1 \
+              --registry-server ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
+              --registry-username ${{ secrets.ACR_USERNAME }} \
+              --registry-password ${{ secrets.ACR_PASSWORD }} \
               --env-vars \
                 MONGO_URI="${{ secrets.MONGO_URI }}" \
                 GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
@@ -67,6 +70,9 @@ jobs:
             --name ${{ secrets.AZURE_CONTAINER_APP }} \
             --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
             --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest \
+            --registry-server ${{ secrets.AZURE_CONTAINER_REGISTRY }} \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }} \
             --set-env-vars \
               MONGO_URI="${{ secrets.MONGO_URI }}" \
               GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
