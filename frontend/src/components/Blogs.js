@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
-import '../css/Blogs.css'; // Make sure to import the CSS file
+import '../css/Blogs.css'; // Make sure to import the CSS filee
 import memoji from '../assets/images/memoji.jpeg'; // Import the imagee
 
 const Blogs = () => {
