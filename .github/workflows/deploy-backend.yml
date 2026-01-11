@@ -29,8 +29,8 @@ jobs:
         run: |
           cd backend
           docker buildx build --platform linux/amd64 \
-            -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPO_BACKEND }}:latest \
-            --push .
+          -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/aasare-backend:latest \
+          --push .
 
       - name: Deploy to ECS
         run: |
