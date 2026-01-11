@@ -1,42 +1,40 @@
-name: 🚀 Deploy Backend to Azure Container Apps
+name: Deploy Backend to AWS ECS
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'backend/**'
-      - '.github/workflows/deploy-backend.yml'
+      - "backend/**"
+      - ".github/workflows/deploy-backend.yml"
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: login to Azure
-        uses: azure/login@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name:  Login to Azure Container Registry
-        run: |
-          az acr login --name aasareregistry
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and Push Docker image
+      - name: Build and push Docker image
         run: |
           cd backend
           docker buildx build --platform linux/amd64 \
-            -t ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest . --push
+            -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPO_BACKEND }}:latest \
+            --push .
 
-      - name:  Deploy to Azure Container App
+      - name: Deploy to ECS
         run: |
-          az containerapp update \
-            --name ${{ secrets.AZURE_CONTAINER_APP }} \
-            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
-            --image ${{ secrets.AZURE_CONTAINER_REGISTRY }}/aasare-backend:latest \
-            --set-env-vars \
-              MONGO_URI="${{ secrets.MONGO_URI }}" \
-              GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" \
-              SECRET_KEY="${{ secrets.SECRET_KEY }}" 
+          aws ecs update-service \
+            --cluster ${{ secrets.ECS_CLUSTER }} \
+            --service ${{ secrets.ECS_BACKEND_SERVICE }} \
+            --force-new-deployment
