@@ -15,7 +15,7 @@ const Exercises = () => {
     useEffect(() => {
         const fetchExercises = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/exercises`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/exercises`, { withCredentials: true });
                 setExercises(response.data);
             } catch (error) {
                 console.error('Error fetching exercises', error);
@@ -24,7 +24,7 @@ const Exercises = () => {
 
         const fetchExerciseProgress = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/exercises/progress`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/exercises/progress`, { withCredentials: true });
                 setExerciseProgress(response.data);
             } catch (error) {
                 console.error('Error fetching exercise progress', error);
@@ -37,7 +37,7 @@ const Exercises = () => {
     const handleAddExercise = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/exercises`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/exercises`, {
                 title,
                 description,
                 created_by : auth.username
@@ -54,9 +54,9 @@ const Exercises = () => {
 
     const handleCompleteExercise = async (exerciseId) => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/exercises/${exerciseId}/complete`, {}, { withCredentials: true });
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/exercises/${exerciseId}/complete`, {}, { withCredentials: true });
             setMessage('Exercise completed successfully!');
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/exercises/progress`, { withCredentials: true });
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/exercises/progress`, { withCredentials: true });
             setExerciseProgress(response.data);
         } catch (error) {
             setMessage('Error completing exercise');
@@ -66,7 +66,7 @@ const Exercises = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, { withCredentials: true });
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
             window.location.href = '/';
         } catch (error) {
             console.error('Error logging out', error);

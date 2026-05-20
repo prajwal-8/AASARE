@@ -15,7 +15,7 @@ const Podcast = () => {
     useEffect(() => {
         const fetchPodcastData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/podcast_series`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/podcast_series`, { withCredentials: true });
                 const { podcastSeries, podcastEpisodes } = response.data.searchForTerm;
                 setPodcastSeries(podcastSeries);
                 setPodcastEpisodes(podcastEpisodes);

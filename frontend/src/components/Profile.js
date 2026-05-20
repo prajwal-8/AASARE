@@ -18,7 +18,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/profile`, { withCredentials: true });
                 setProfile(response.data);
                 setFormData(response.data);
             } catch (error) {
@@ -32,7 +32,7 @@ const Profile = () => {
     }, [navigate]);
 
     const handleLogout = async () => {
-        await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, { withCredentials: true });
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
         logout();
         navigate('/login');
     };
@@ -55,7 +55,7 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`${process.env.REACT_APP_API_URL}/profile`, formData, { withCredentials: true });
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/profile`, formData, { withCredentials: true });
             setProfile(formData);
             setEditMode(false);
         } catch (error) {
@@ -66,7 +66,7 @@ const Profile = () => {
     const handleUpdateBlog = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`${process.env.REACT_APP_API_URL}/blogs/${editBlogId}`, blogFormData, { withCredentials: true });
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/blogs/${editBlogId}`, blogFormData, { withCredentials: true });
             const updatedBlogs = profile.blogs.map((blog) =>
                 blog._id === editBlogId ? { ...blog, ...blogFormData } : blog
             );
@@ -85,7 +85,7 @@ const Profile = () => {
     const handleUpdateExercise = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`${process.env.REACT_APP_API_URL}/exercises/${editExerciseId}`, exerciseFormData, { withCredentials: true });
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/exercises/${editExerciseId}`, exerciseFormData, { withCredentials: true });
             const updatedExercises = profile.exercises.map((exercise) =>
                 exercise._id === editExerciseId ? { ...exercise, ...exerciseFormData } : exercise
             );

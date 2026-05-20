@@ -10,7 +10,7 @@ const Badges = () => {
     const fetchBadges = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/badges`, { withCredentials: true });
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/badges`, { withCredentials: true });
             setBadges(res.data);
         } catch (error) {
             console.error('Error fetching badges', error);

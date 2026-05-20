@@ -177,7 +177,7 @@ const Chatbot = () => {
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/chat_history`, { withCredentials: true });
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/chat_history`, { withCredentials: true });
         setChatHistory(res.data);
       } catch (error) {
         console.error('Error fetching chat history', error);
@@ -198,7 +198,7 @@ const Chatbot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/chatbot`, { question }, { withCredentials: true });
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/chatbot`, { question }, { withCredentials: true });
       const newMessage = { role: 'user', message: question };
       const botResponse = { role: 'bot', response: res.data.response };
       setChatHistory((prevChatHistory) => [...prevChatHistory, newMessage, botResponse]); // Append new messages to the end
@@ -210,7 +210,7 @@ const Chatbot = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, { withCredentials: true });
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
       window.location.href = '/';
     } catch (error) {
       console.error('Error logging out', error);

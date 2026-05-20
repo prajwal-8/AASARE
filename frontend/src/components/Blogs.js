@@ -16,7 +16,7 @@ const Blogs = () => {
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/blogs`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/blogs`, { withCredentials: true });
                 setBlogs(response.data);
             } catch (error) {
                 console.error('Error fetching blogs', error);
@@ -29,7 +29,7 @@ const Blogs = () => {
     const handleAddBlog = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/blogs`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/blogs`, {
                 title,
                 content,
                 tag
@@ -46,7 +46,7 @@ const Blogs = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, { withCredentials: true });
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
             window.location.href = '/';
         } catch (error) {
             console.error('Error logging out', error);

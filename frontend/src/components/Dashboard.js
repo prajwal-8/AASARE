@@ -13,7 +13,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchDashboard = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/dashboard`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/dashboard`, { withCredentials: true });
                 setMessage(response.data.message);
             } catch (error) {
                 if (error.response && error.response.status === 401) {
@@ -26,7 +26,7 @@ const Dashboard = () => {
     }, [navigate]);
 
     const handleLogout = async () => {
-        await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, { withCredentials: true });
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
         logout();
         navigate('/login');
     };

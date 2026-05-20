@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_pymongo import PyMongo
 from flask_cors import CORS
-from dotenv import load_dotenv
+
 import os
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -14,8 +14,7 @@ import asyncio
 from Chatbot.chatbot import chatbot_response
 from datetime import datetime, timezone
 
-# ---- load env ----
-load_dotenv(dotenv_path=".env")
+
 
 # ---- app + CORS + cookies ----
 app = Flask(__name__)
@@ -77,6 +76,9 @@ def make_graphql_request(query, variables):
         print(f"GraphQL query execution failed: {e}")
         return None
 
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}, 200
 # ---- Health endpoints ----
 @app.get("/api/db-ping")
 def db_ping():
@@ -93,7 +95,7 @@ def index():
     return "Welcome to Aasare!"
 
 # ---- Example Taddy endpoint ----
-@app.route('/podcast_series', methods=['GET'])
+@app.route('/api/podcast_series', methods=['GET'])
 def get_podcast_series():
     name = request.args.get('name', '')
     query = '''query searchForTerm($term: String, $page: Int, $limitPerPage: Int, $filterForTypes: [TaddyType], $filterForCountries: [Country], $filterForLanguages: [Language], $filterForGenres: [Genre], $filterForSeriesUuids: [ID], $filterForNotInSeriesUuids: [ID], $isExactPhraseSearchMode: Boolean, $isSafeMode: Boolean, $searchResultsBoostType: SearchResultBoostType) {
@@ -113,7 +115,7 @@ def get_podcast_series():
     return (jsonify(response), 200) if response else (jsonify({"error": "Not found"}), 404)
 
 # ---- Auth & Users ----
-@app.route('/register', methods=['POST'])
+@app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
     name = data.get('name')
@@ -159,7 +161,7 @@ def register():
     mongo.db.users.insert_one(user_data)
     return jsonify({"message": "User registered successfully"}), 201
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
     username = data.get('username')
@@ -182,20 +184,20 @@ def login():
         "role": user['role']
     }), 200
 
-@app.route('/logout', methods=['POST'])
+@app.route('/api/logout', methods=['POST'])
 def logout():
     session.pop('username', None)
     session.pop('role', None)
     return jsonify({"message": "Logout successful"}), 200
 
-@app.route('/dashboard', methods=['GET'])
+@app.route('/api/dashboard', methods=['GET'])
 def dashboard():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
     return jsonify({"message": f"Hello, {session['role']} {session['username']}!"}), 200
 
 # ---- Blogs ----
-@app.route('/blogs', methods=['GET'])
+@app.route('/api/blogs', methods=['GET'])
 def get_blogs():
     blogs = mongo.db.blogs.find()
     result = []
@@ -209,7 +211,7 @@ def get_blogs():
         })
     return jsonify(result), 200
 
-@app.route('/blogs', methods=['POST'])
+@app.route('/api/blogs', methods=['POST'])
 def add_blog():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -237,7 +239,7 @@ def add_blog():
         return jsonify({"error": "An error occurred while adding the blog"}), 500
 
 # ---- Exercises ----
-@app.route('/exercises', methods=['GET'])
+@app.route('/api/exercises', methods=['GET'])
 def get_exercises():
     exercises = mongo.db.exercises.find()
     result = []
@@ -249,7 +251,7 @@ def get_exercises():
         })
     return jsonify(result), 200
 
-@app.route('/exercises', methods=['POST'])
+@app.route('/api/exercises', methods=['POST'])
 def add_exercise():
     data = request.get_json()
     title = data.get('title')
@@ -261,7 +263,7 @@ def add_exercise():
     exercise_id = mongo.db.exercises.insert_one({'title': title, 'description': description}).inserted_id
     return jsonify({"_id": str(exercise_id), "title": title, "description": description}), 201
 
-@app.route('/exercises/<exercise_id>/complete', methods=['POST'])
+@app.route('/api/exercises/<exercise_id>/complete', methods=['POST'])
 def complete_exercise(exercise_id):
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -306,7 +308,7 @@ def update_exercise_progress(username, exercise_id):
         {"$set": {"exercise_progress": exercise_progress, "badges": badges_earned}}
     )
 
-@app.route('/exercises/progress', methods=['GET'])
+@app.route('/api/exercises/progress', methods=['GET'])
 def get_exercise_progress():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -345,7 +347,7 @@ def award_badge(username):
             badges.append(badge)
             mongo.db.users.update_one({"username": username}, {"$set": {"badges": badges}})
 
-@app.route('/badges', methods=['GET'])
+@app.route('/api/badges', methods=['GET'])
 def get_badges():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -357,7 +359,7 @@ def get_badges():
     badges = user.get('badges', [])
     return jsonify(badges), 200
 
-@app.route('/consultants', methods=['GET'])
+@app.route('/api/consultants', methods=['GET'])
 def get_consultants():
     consultants = mongo.db.users.find({"role": "consultant"})
     result = []
@@ -396,7 +398,7 @@ def get_exercises_by_author(username):
         })
     return result
 
-@app.route('/blogs/<blog_id>', methods=['PUT'])
+@app.route('/api/blogs/<blog_id>', methods=['PUT'])
 def update_blog(blog_id):
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -416,7 +418,7 @@ def update_blog(blog_id):
     except Exception:
         return jsonify({"error": "An error occurred while updating the blog"}), 500
 
-@app.route('/exercises/<exercise_id>', methods=['PUT'])
+@app.route('/api/exercises/<exercise_id>', methods=['PUT'])
 def update_exercise(exercise_id):
     data = request.get_json()
     title = data.get('title')
@@ -433,7 +435,7 @@ def update_exercise(exercise_id):
         logging.error(f"Error updating exercise: {e}")
         return jsonify({"error": "An error occurred while updating the exercise"}), 500
 
-@app.route('/profile', methods=['GET'])
+@app.route('/api/profile', methods=['GET'])
 def get_profile():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -452,7 +454,7 @@ def get_profile():
 
     return jsonify(user), 200
 
-@app.route('/profile', methods=['PUT'])
+@app.route('/api/profile', methods=['PUT'])
 def update_profile():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -480,7 +482,7 @@ def store_chat_message(username, role, message, response):
     }
     mongo.db.chat_history.insert_one(chat_data)
 
-@app.route('/chat_history', methods=['GET'])
+@app.route('/api/chat_history', methods=['GET'])
 def get_chat_history():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -498,7 +500,7 @@ def get_chat_history():
         })
     return jsonify(history), 200
 
-@app.route('/chatbot', methods=['POST'])
+@app.route('/api/chatbot', methods=['POST'])
 def chatbot():
     if 'username' not in session:
         return jsonify({"error": "Unauthorized"}), 401
@@ -511,13 +513,13 @@ def chatbot():
     if not question:
         return jsonify({"error": "Question is required"}), 400
 
-    response = asyncio.run(chatbot_response(question))
+    # ✅ SAFE asyncio usage under Gunicorn
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    response = loop.run_until_complete(chatbot_response(question))
+    loop.close()
 
-    # Save user message and bot response
     store_chat_message(username, 'user', question, None)
     store_chat_message(username, 'bot', None, response['response'])
 
     return jsonify(response), 200
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)

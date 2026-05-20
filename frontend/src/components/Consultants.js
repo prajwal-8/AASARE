@@ -12,7 +12,7 @@ const Consultants = () => {
     useEffect(() => {
         const fetchConsultants = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/consultants`, { withCredentials: true });
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/consultants`, { withCredentials: true });
                 setConsultants(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -24,7 +24,7 @@ const Consultants = () => {
     }, []);
 
     const handleLogout = async () => {
-        await axios.post(`${process.env.REACT_APP_API_URL}/logout`, {}, { withCredentials: true });
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/logout`, {}, { withCredentials: true });
         logout();
         navigate('/login');
     };
